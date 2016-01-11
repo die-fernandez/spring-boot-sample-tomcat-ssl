@@ -1,0 +1,19 @@
+language: java
+jdk:
+  - oraclejdk8
+sudo: required
+
+services:
+  - docker
+  
+before_install:  
+    - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+script:  
+    #build the image
+    - docker build --no-cache -t diegofernandez/spring-boot-ssl .
+    #tag the build
+    - docker tag diegofernandez/spring-boot-ssl:latest diegofernandez/spring-boot-ssl:v1
+    #push the image to the repository
+    - docker push diegofernandez/spring-boot-ssl
+  
